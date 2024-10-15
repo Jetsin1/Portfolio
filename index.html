@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="menu">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <span class="title">Justin's 3D</span>
+        <div class="dropdown" id="dropdownMenu">
+            <button onclick="toggleAbout()">About Me</button>
+            <div id="about" class="dropdown-content">
+                <p>Your about me text goes here.</p>
+            </div>
+            <button onclick="toggleContact()">Contact</button>
+            <div id="contact" class="dropdown-content">
+                <p>Phone: 123-456-7890</p>
+                <p>Instagram: @yourusername</p>
+                <p>LinkedIn: linkedin.com/in/yourprofile</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="canvas-container"></div>
+    
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="closePopup" class="close-button">X</span>
+            <h2 id="popupTitle"></h2>
+            <p id="popupDescription"></p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
