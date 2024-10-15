@@ -132,3 +132,59 @@ function onWindowResize() {
 }
 
 window.addEventListener('resize', onWindowResize, false);
+
+
+// Function to handle touch start
+function onTouchStart(event) {
+    event.preventDefault(); // Prevent default behavior
+    isDragging = true;
+    previousMousePosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+}
+
+// Function to handle touch move
+function onTouchMove(event) {
+    event.preventDefault(); // Prevent default behavior
+    if (isDragging) {
+        const deltaMove = {
+            x: event.touches[0].clientX - previousMousePosition.x,
+            y: event.touches[0].clientY - previousMousePosition.y
+        };
+        // Reduce sensitivity of the rotation
+        momentum.x += deltaMove.x * 0.002; 
+        momentum.y += deltaMove.y * 0.002; 
+        previousMousePosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }
+}
+
+// Function to handle touch end
+function onTouchEnd(event) {
+    isDragging = false;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObject(die);
+    if (intersects.length > 0) {
+        const faceIndex = intersects[0].faceIndex; // Get face index
+        die.callback(faceIndex);
+    }
+}
+
+// Existing mouse event listeners
+window.addEventListener('mousemove', onMouseMove, false);
+window.addEventListener('mousedown', onMouseDown, false);
+window.addEventListener('mouseup', onMouseUp, false);
+window.addEventListener('mousemove', onMouseDrag, false);
+
+// Touch event listeners for mobile
+window.addEventListener('touchstart', onTouchStart, false);
+window.addEventListener('touchmove', onTouchMove, false);
+window.addEventListener('touchend', onTouchEnd, false);
+
+// Popup close function
+document.getElementById('closePopup').onclick = function() {
+    document.getElementById('popup').style.display = 'none';
+};
+
+// Add touch support for closing the popup
+document.getElementById('closePopup').ontouchstart = function() {
+    document.getElementById('popup').style.display = 'none';
+};
+
