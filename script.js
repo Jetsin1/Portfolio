@@ -3,6 +3,11 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Set the background color of the scene
+renderer.setClearColor(0x26292b); // Example of a light gray background
+
+
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 // Create a 6-sided die (cube)
