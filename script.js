@@ -139,6 +139,8 @@ window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
 window.addEventListener('mousemove', onMouseDrag, false);
 
+// Initially hide the dropdown menu on startup
+document.getElementById('dropdownMenu').style.display = 'none';
 // Hamburger menu toggle functions
 function toggleMenu() {
     const menu = document.getElementById('dropdownMenu');
