@@ -7,7 +7,7 @@ body {
 .menu {
   position: absolute;
   top: 40px;
-  left: 40px; /* Changed to align the menu back to the left */
+  left: 2.7%; /* Changed to align the menu back to the left */
   background-color: #444; /* Darker gray for the menu */
   color: rgb(142, 255, 119);
   border-radius: 5px;
