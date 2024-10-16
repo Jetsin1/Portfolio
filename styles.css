@@ -1,20 +1,20 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #ddd; /* Set background to light gray */
+  background-color: #333; /* Dark gray background */
 }
 
 .menu {
   position: absolute;
-  left: 40px; /* Moved to the left */
   top: 40px;
-  background-color: #333;
-  color: white;
+  left: 40px; /* Changed to align the menu back to the left */
+  background-color: #444; /* Darker gray for the menu */
+  color: rgb(142, 255, 119);
   border-radius: 5px;
   padding: 10px;
-  z-index: 1000; /* Above other content */
+  z-index: 1000;
   display: flex;
-  align-items: center; /* Center vertically */
+  align-items: center;
 }
 
 .hamburger {
@@ -23,35 +23,45 @@ body {
 }
 
 .title {
-  margin-left: 10px; /* Space between hamburger and title */
+  margin-left: 10px;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
 }
 
 .dropdown {
-  display: none; /* Initially hidden */
+  display: flex;
   flex-direction: column;
-  margin-top: 10px; /* Space below the title */
+  background-color: #444; /* Darker background for dropdown */
+  padding: 10px;
+  border-radius: 5px;
+  position: fixed;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  top: 92px; /* Dropdown position adjusted */
+  left: 2.6%; /* Open to the left */
 }
 
 .dropdown-content {
   display: none;
-  background-color: #444;
+  background-color: #555; /* Lighter dark gray for dropdown content */
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
 }
 
 .dropdown-content button {
-  background: none;
-  color: white;
+  font-family: 'Courier New', Courier, monospace; /* Match title font */
+  color: rgb(156, 156, 156);
+  background-color: rgba(0, 255, 255, 0.2); /* Modern look */
   border: none;
-  padding: 8px 12px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s; /* Animation on hover */
+  transition: background 0.3s, transform 0.2s;
 }
 
 .dropdown-content button:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05); /* Slightly grow on hover */
 }
 
 .popup {
@@ -61,20 +71,20 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7); /* Popup background remains black */
   justify-content: center;
   align-items: center;
-  z-index: 1001; /* Above everything else */
+  z-index: 1001;
 }
 
 .popup-content {
   background: rgb(75, 75, 75);
-  opacity: 95%; /* Less transparent */
+  opacity: 95%;
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  z-index: 1002; /* Above popup background */
-  width: 300px; /* Set a fixed width */
+  z-index: 1002;
+  width: 300px;
 }
 
 .close-button {
