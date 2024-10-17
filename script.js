@@ -186,3 +186,76 @@ function onWindowResize() {
 window.addEventListener('resize', onWindowResize, false);
 
 console.log(`Face clicked: ${faceIndex + 1}`);
+
+// Handle touch start
+function onTouchStart(event) {
+    isDragging = true;
+    const touch = event.touches[0];
+    previousMousePosition = { x: touch.clientX, y: touch.clientY };
+}
+
+// Handle touch move (dragging)
+function onTouchMove(event) {
+    if (isDragging) {
+        const touch = event.touches[0];
+        const deltaMove = {
+            x: touch.clientX - previousMousePosition.x,
+            y: touch.clientY - previousMousePosition.y
+        };
+
+        momentum.x += deltaMove.x * 0.0005; // Apply rotation based on drag
+        momentum.y += deltaMove.y * 0.0005; // Apply rotation based on drag
+        previousMousePosition = { x: touch.clientX, y: touch.clientY };
+    }
+}
+
+// Handle touch end
+function onTouchEnd(event) {
+    isDragging = false;
+    if (event.changedTouches.length > 0) {
+        const touch = event.changedTouches[0];
+        handleTouchClick(touch);
+    }
+}
+
+// Simulate a click for touch events
+function handleTouchClick(touch) {
+    raycaster.setFromCamera({
+        x: (touch.clientX / window.innerWidth) * 2 - 1,
+        y: -(touch.clientY / window.innerHeight) * 2 + 1
+    }, camera);
+    const intersects = raycaster.intersectObject(die);
+    if (intersects.length > 0) {
+        const faceIndex = intersects[0].faceIndex;
+        die.callback(faceIndex + 1); // Call with face index + 1
+    }
+}
+
+// Add touch event listeners for die interaction
+window.addEventListener('touchstart', onTouchStart, false);
+window.addEventListener('touchmove', onTouchMove, false);
+window.addEventListener('touchend', onTouchEnd, false);
+
+// Popup close function (with touch support)
+document.getElementById('closePopup').addEventListener('click', function() {
+    document.getElementById('popup').style.display = 'none';
+});
+
+document.getElementById('closePopup').addEventListener('touchstart', function() {
+    document.getElementById('popup').style.display = 'none';
+});
+
+// Close popup when clicking or touching outside of it
+window.addEventListener('click', function(event) {
+    const popup = document.getElementById('popup');
+    if (event.target === popup) {
+        popup.style.display = 'none';
+    }
+});
+
+window.addEventListener('touchstart', function(event) {
+    const popup = document.getElementById('popup');
+    if (event.target === popup) {
+        popup.style.display = 'none';
+    }
+});
