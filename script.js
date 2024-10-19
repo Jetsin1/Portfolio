@@ -7,7 +7,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // Set the background color of the scene
 renderer.setClearColor(0x26292b); // Example of a light gray background
 
-
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 // Create a 6-sided die (cube)
@@ -23,11 +22,55 @@ const materials = [
 const die = new THREE.Mesh(geometry, materials);
 scene.add(die);
 
+// Create dots for each face
+const dotGeometry = new THREE.SphereGeometry(0.055, 16, 16); // Small spheres
+const dotMaterial = new THREE.MeshBasicMaterial({
+    color: 0xbfbfbf // Flat grey color
+});
+
+
+// Positions for the dots at the center of each face
+const positions = [
+    new THREE.Vector3(0, 0, 1.56),   // Front
+    new THREE.Vector3(0, 0, -1.56),  // Back
+    new THREE.Vector3(1.56, 0, 0),   // Right
+    new THREE.Vector3(-1.56, 0, 0),  // Left
+    new THREE.Vector3(0, 1.56, 0),   // Top
+    new THREE.Vector3(0, -1.56, 0)   // Bottom
+];
+
+const dots = [];
+
+// Create the dots and add them to the scene
+positions.forEach((position) => {
+    const dot = new THREE.Mesh(dotGeometry, dotMaterial);
+    dot.position.copy(position);
+    scene.add(dot);
+    dots.push(dot);
+});
+
 camera.position.z = 5; // Adjusted for larger cube
 
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 let momentum = { x: 0, y: 0 }; // Store momentum
+
+// Function to update dot positions based on cube rotation
+function updateDotPositions() {
+    // Create a quaternion from the cube's rotation
+    const rotationQuaternion = new THREE.Quaternion().setFromEuler(die.rotation);
+
+    dots.forEach((dot, index) => {
+        // Get the initial position for the dot
+        const initialPosition = positions[index].clone();
+
+        // Apply the rotation quaternion to the initial position
+        initialPosition.applyQuaternion(rotationQuaternion);
+
+        // Update the dot's position
+        dot.position.copy(initialPosition);
+    });
+}
 
 // Add rotation to the die
 function animate() {
@@ -36,15 +79,18 @@ function animate() {
     die.rotation.y += momentum.x; // Apply momentum to rotation
     momentum.x *= 0.95; // Dampen momentum
     momentum.y *= 0.95; // Dampen momentum
+
+    updateDotPositions(); // Update dot positions to match the die's rotation
+
     renderer.render(scene, camera);
 }
 animate();
 
-// Handle die click
-die.callback = function(face) {
+// Callback function for showing popups
+function showPopup(faceIndex) {
     let title, description;
 
-    switch(face) {
+    switch(faceIndex) {
         case 0:
             title = 'Project 1: Environment Design';
             description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
@@ -66,7 +112,7 @@ die.callback = function(face) {
             description = 'This is a detailed description of the game asset creation workflow in Project 5. It covers the modeling, UV unwrapping, and texture painting steps.';
             break;
         case 5:
-            title = 'Lego Animation';
+            title = 'Project 6: Architectural Visualization';
             description = 'This is a detailed description of the architectural visualization work in Project 6. It includes rendering techniques, camera settings, and material creation.';
             break;
         default:
@@ -76,10 +122,11 @@ die.callback = function(face) {
     }
 
     // Display the popup with the individualized title and description
-    document.getElementById('popup').style.display = 'flex';
+    const popup = document.getElementById('popup');
+    popup.style.display = 'flex';
     document.getElementById('popupTitle').innerText = title;
     document.getElementById('popupDescription').innerText = description;
-};
+}
 
 // Add raycasting for mouse interaction
 const raycaster = new THREE.Raycaster();
@@ -95,15 +142,15 @@ function onMouseDown(event) {
     previousMousePosition = { x: event.clientX, y: event.clientY };
 }
 
-// Click handler for the die
+// Click handler for the dots
 function handleClick(event) {
     if (!isDragging) {
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObject(die);
+        const intersects = raycaster.intersectObjects(dots);
         if (intersects.length > 0) {
-            // Use the faceIndex to determine which face was clicked
-            const faceIndex = intersects[0].faceIndex;
-            die.callback(faceIndex + 1); // Call with face index + 1 since faces are 1-indexed in your callback
+            // Use the index of the dot to determine which face was clicked
+            const dotIndex = dots.indexOf(intersects[0].object);
+            showPopup(dotIndex); // Show popup with the corresponding face index
         }
     }
 }
@@ -119,7 +166,7 @@ function onMouseClick(event) {
     handleClick(event);
 }
 
-
+// Updated dragging function
 function onMouseDrag(event) {
     if (isDragging) {
         const deltaMove = {
@@ -164,96 +211,12 @@ function toggleContact() {
 }
 
 // Popup close function
-document.getElementById('closePopup').onclick = function() {
-    document.getElementById('popup').style.display = 'none';
-};
+document.getElementById('closePopup').addEventListener('click', function () {
+    document.getElementById('popup').style.display = 'none'; // Hide popup on close
+});
 
 // Close popup when clicking outside of it
 window.addEventListener('click', function(event) {
-    const popup = document.getElementById('popup');
-    if (event.target === popup) {
-        popup.style.display = 'none';
-    }
-});
-
-// Ensure the cube doesn't rotate excessively
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-window.addEventListener('resize', onWindowResize, false);
-
-console.log(`Face clicked: ${faceIndex + 1}`);
-
-// Handle touch start
-function onTouchStart(event) {
-    isDragging = true;
-    const touch = event.touches[0];
-    previousMousePosition = { x: touch.clientX, y: touch.clientY };
-}
-
-// Handle touch move (dragging)
-function onTouchMove(event) {
-    if (isDragging) {
-        const touch = event.touches[0];
-        const deltaMove = {
-            x: touch.clientX - previousMousePosition.x,
-            y: touch.clientY - previousMousePosition.y
-        };
-
-        momentum.x += deltaMove.x * 0.0005; // Apply rotation based on drag
-        momentum.y += deltaMove.y * 0.0005; // Apply rotation based on drag
-        previousMousePosition = { x: touch.clientX, y: touch.clientY };
-    }
-}
-
-// Handle touch end
-function onTouchEnd(event) {
-    isDragging = false;
-    if (event.changedTouches.length > 0) {
-        const touch = event.changedTouches[0];
-        handleTouchClick(touch);
-    }
-}
-
-// Simulate a click for touch events
-function handleTouchClick(touch) {
-    raycaster.setFromCamera({
-        x: (touch.clientX / window.innerWidth) * 2 - 1,
-        y: -(touch.clientY / window.innerHeight) * 2 + 1
-    }, camera);
-    const intersects = raycaster.intersectObject(die);
-    if (intersects.length > 0) {
-        const faceIndex = intersects[0].faceIndex;
-        die.callback(faceIndex + 1); // Call with face index + 1
-    }
-}
-
-// Add touch event listeners for die interaction
-window.addEventListener('touchstart', onTouchStart, false);
-window.addEventListener('touchmove', onTouchMove, false);
-window.addEventListener('touchend', onTouchEnd, false);
-
-// Popup close function (with touch support)
-document.getElementById('closePopup').addEventListener('click', function() {
-    document.getElementById('popup').style.display = 'none';
-});
-
-document.getElementById('closePopup').addEventListener('touchstart', function() {
-    document.getElementById('popup').style.display = 'none';
-});
-
-// Close popup when clicking or touching outside of it
-window.addEventListener('click', function(event) {
-    const popup = document.getElementById('popup');
-    if (event.target === popup) {
-        popup.style.display = 'none';
-    }
-});
-
-window.addEventListener('touchstart', function(event) {
     const popup = document.getElementById('popup');
     if (event.target === popup) {
         popup.style.display = 'none';
