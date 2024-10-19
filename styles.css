@@ -4,6 +4,11 @@ body {
   background-color: #333; /* Dark gray background */
 }
 
+a{
+  text-decoration: none;
+  color: aquamarine;
+}
+
 .menu {
   position: absolute;
   top: 40px;
@@ -31,6 +36,7 @@ body {
 .dropdown {
   display: flex;
   flex-direction: column;
+  width: 20%; /* Set the width to 25% of the page */
   background-color: #444; /* Darker background for dropdown */
   padding: 10px;
   border-radius: 5px;
@@ -45,24 +51,38 @@ body {
   background-color: #555; /* Lighter dark gray for dropdown content */
   padding: 10px;
   border-radius: 5px;
+
 }
 
-.dropdown-content button {
-  font-family: 'Courier New', Courier, monospace; /* Match title font */
-  color: rgb(156, 156, 156);
-  background-color: rgba(0, 255, 255, 0.2); /* Modern look */
-  border: none;
-  padding: 10px 15px;
-  margin: 5px 0;
-  border-radius: 5px;
+/* Style for dropdown content */
+.dropdown-content {
+  display: none; /* Initially hidden */
+  
+  background-color: rgba(36, 36, 36, 0.8); /* Background color (adjust as needed) */
+  padding: 10px; /* Add padding for spacing */
+  color: white; /* Text color */
+  font-family: 'Arial', sans-serif; /* Font family */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
+  border-radius: 8px; /* Optional rounded corners */
+}
+
+/* Adjusting the dropdown text links */
+.dropdown-link {
+  color: rgb(142, 255, 119); 
+  text-decoration: underline;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  display: block;
+  margin: 10px 0;
 }
 
-.dropdown-content button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05); /* Slightly grow on hover */
+/* Optional hover effect for the dropdown links */
+.dropdown-link:hover {
+  color: rgb(200, 255, 150);
 }
+
+
 
 .popup {
   display: none;
