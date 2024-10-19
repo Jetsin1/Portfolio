@@ -11,27 +11,32 @@
         <div class="hamburger" onclick="toggleMenu()">☰</div>
         <span class="title">Justin's 3D</span>
         <div class="dropdown" id="dropdownMenu">
-            <button onclick="toggleAbout()">About Me</button>
-            <div id="about" class="dropdown-content">
-                <p>Hello! I'm Justin Vachel Myat, a passionate third-year student studying Bachelor of Design at RMIT University. I specialize in 3D modeling and visual effects, with a keen interest in creating captivating environments and props. My goal is to become a VFX artist, focusing on material and texture work that brings ideas to life.
+            
+            <!-- About Me Section with Clickable Text -->
+            <a href="javascript:void(0);" class="dropdown-link" onclick="toggleAbout()">About Me</a>
+            <div id="about" class="dropdown-content" style="display: none;">
+                <p>Justin Vachel Myat recently graduated with a Bachelor of Design from RMIT University and is seeking opportunities in 3D modeling, visual effects, and animation. 
+                    He is passionate about creating material and texture work that brings ideas to life and has hands-on experience with tools like Maya and real-time rendering software.
+                     Justin is expanding his knowledge in ZBrush and Unreal Engine to enhance his skill set further.
 
-                    I’m experienced in software like Maya and various real-time rendering tools, and I'm eager to expand my skill set to include ZBrush and Unreal Engine. I believe in the power of collaboration and am excited to contribute my creativity and enthusiasm to dynamic teams.
-                    
-                    In addition to my studies, I'm a tech enthusiast and enjoy exploring the latest in hardware and software. When I’m not immersed in my design work, you can find me gaming or experimenting with photography. I’m always looking to learn and grow, and I’m committed to making a positive impact in the creative industry.
-                    
-                    Thanks for visiting my portfolio! I look forward to connecting and sharing my journey with you.</p>
+                    As a tech enthusiast, he enjoys staying updated with the latest advancements in hardware and software. 
+                    Outside of work, his interests include Personal Computer Building and photography. 
+                    Eager to collaborate and grow, Justin is ready to make a positive impact in the creative industry.</p>
             </div>
-            <button onclick="toggleContact()">Contact</button>
-            <div id="contact" class="dropdown-content">
-                <p>Email: justinvachel66@gmail.com</p>
-                <p>Instagram: @jetsin_takes</p>
-                <p>LinkedIn: https://www.linkedin.com/in/justin-myat-70649631b/</p>
+
+            <!-- Contact Section with Clickable Text -->
+            <a href="javascript:void(0);" class="dropdown-link" onclick="toggleContact()">Contact</a>
+            <div id="contact" class="dropdown-content" style="display: none;">
+                <p><a href="mailto:justinvachel66@gmail.com">Email</a></p>
+                <p><a href="https://www.youtube.com" target="_blank">YouTube</a></p>
+                <p><a href="https://www.instagram.com" target="_blank">Instagram</a></p>
+                <p><a href="https://www.linkedin.com/in/justin-myat-70649631b/" target="_blank">LinkedIn</a></p>
             </div>
         </div>
     </div>
-    
+
     <div id="canvas-container"></div>
-    
+
     <div id="popup" class="popup">
         <div class="popup-content">
             <span id="closePopup" class="close-button">X</span>
@@ -39,8 +44,10 @@
             <p id="popupDescription"></p>
         </div>
     </div>
-    
+
+    <!-- Include Three.js and your custom script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>
