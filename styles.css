@@ -36,7 +36,7 @@ a{
 .dropdown {
   display: flex;
   flex-direction: column;
-  width: 20%; /* Set the width to 25% of the page */
+  width: 300px; /* Set the width to 25% of the page */
   background-color: #444; /* Darker background for dropdown */
   padding: 10px;
   border-radius: 5px;
@@ -57,13 +57,14 @@ a{
 /* Style for dropdown content */
 .dropdown-content {
   display: none; /* Initially hidden */
-  
   background-color: rgba(36, 36, 36, 0.8); /* Background color (adjust as needed) */
   padding: 10px; /* Add padding for spacing */
   color: white; /* Text color */
   font-family: 'Arial', sans-serif; /* Font family */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
   border-radius: 8px; /* Optional rounded corners */
+  max-height: 400px; /* Limit the height to 300px */
+  overflow-y: auto; /* Scroll only when content overflows */
 }
 
 /* Adjusting the dropdown text links */
@@ -80,6 +81,20 @@ a{
 /* Optional hover effect for the dropdown links */
 .dropdown-link:hover {
   color: rgb(200, 255, 150);
+}
+
+/* Hide the scrollbar on Webkit browsers (optional) */
+.dropdown-content::-webkit-scrollbar {
+  width: 6px; /* Small scrollbar width */
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5); /* Light-colored scrollbar */
+  border-radius: 4px; /* Rounded scrollbar */
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly darker on hover */
 }
 
 
