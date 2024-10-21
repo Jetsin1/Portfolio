@@ -224,8 +224,9 @@ window.addEventListener('click', function(event) {
 });
 
 // Existing mouse functions remain unchanged...
+// Existing mouse functions remain unchanged...
 
-// Touch event functions
+// Touch event functions for dragging and tap detection
 
 function onTouchStart(event) {
     if (event.touches.length === 1) {  // Only consider single-touch interactions
@@ -235,7 +236,7 @@ function onTouchStart(event) {
             y: event.touches[0].clientY
         };
     }
-    event.preventDefault();  // Prevent the browser from interpreting the touch as a scroll or pinch
+    event.preventDefault();  // Prevent default scrolling behavior
 }
 
 function onTouchMove(event) {
@@ -254,21 +255,75 @@ function onTouchMove(event) {
             y: event.touches[0].clientY
         };
     }
-    event.preventDefault();  // Prevent the default touch behavior (e.g., scrolling)
+    event.preventDefault();
 }
 
 function onTouchEnd(event) {
     isDragging = false;
-    event.preventDefault();  // Prevent default behaviors
+    handleTouchTap(event);  // Handle taps for popups or menu
+    event.preventDefault();
 }
 
-// Add touch event listeners to capture touch interactions
+// Handle tap for opening popups (simulates clicking on dots)
+function handleTouchTap(event) {
+    if (!isDragging) {
+        const touch = event.changedTouches[0];
+        mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(dots);
+        if (intersects.length > 0) {
+            const dotIndex = dots.indexOf(intersects[0].object);
+            showPopup(dotIndex);  // Show the popup based on tapped dot
+        }
+    }
+}
+
+// Hamburger menu toggle for touch
+function toggleMenuTouch(event) {
+    const menu = document.getElementById('dropdownMenu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    event.preventDefault();
+}
+
+// Add touch event listeners for tap interactions
 window.addEventListener('touchstart', onTouchStart, false);
 window.addEventListener('touchmove', onTouchMove, false);
 window.addEventListener('touchend', onTouchEnd, false);
 
-// Existing mouse event listeners
-window.addEventListener('mousemove', onMouseMove, false);
-window.addEventListener('mousedown', onMouseDown, false);
-window.addEventListener('mouseup', onMouseUp, false);
-window.addEventListener('mousemove', onMouseDrag, false);
+// Add touch events for other UI elements like the hamburger menu
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+hamburgerMenu.addEventListener('touchend', toggleMenuTouch, false);
+
+// Toggle About section on touch
+function toggleAboutTouch(event) {
+    const aboutContent = document.getElementById('about');
+    aboutContent.style.display = aboutContent.style.display === 'block' ? 'none' : 'block';
+    const contactContent = document.getElementById('contact');
+    contactContent.style.display = 'none'; // Hide contact content when opening about
+    event.preventDefault();
+}
+
+// Toggle Contact section on touch
+function toggleContactTouch(event) {
+    const contactContent = document.getElementById('contact');
+    contactContent.style.display = contactContent.style.display === 'block' ? 'none' : 'block';
+    const aboutContent = document.getElementById('about');
+    aboutContent.style.display = 'none'; // Hide about content when opening contact
+    event.preventDefault();
+}
+
+// Add touch events for About and Contact sections
+const aboutButton = document.getElementById('aboutButton');
+aboutButton.addEventListener('touchend', toggleAboutTouch, false);
+
+const contactButton = document.getElementById('contactButton');
+contactButton.addEventListener('touchend', toggleContactTouch, false);
+
+// Close popup on touch outside
+window.addEventListener('touchend', function(event) {
+    const popup = document.getElementById('popup');
+    if (event.target === popup) {
+        popup.style.display = 'none';
+    }
+}, false);
