@@ -10,7 +10,7 @@ renderer.setClearColor(0x26292b); // Example of a light gray background
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 // Create a 6-sided die (cube)
-const geometry = new THREE.BoxGeometry(2.50, 2.50, 2.50); // Increased size
+const geometry = new THREE.BoxGeometry(2.30, 2.30, 2.30); // Increased size
 const materials = [
     new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('images/image 1.png') }),
     new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('images/image 2.png') }),
@@ -31,12 +31,12 @@ const dotMaterial = new THREE.MeshBasicMaterial({
 
 // Positions for the dots at the center of each face
 const positions = [
-    new THREE.Vector3(0, 0, 1.56),   // Front
-    new THREE.Vector3(0, 0, -1.56),  // Back
-    new THREE.Vector3(1.56, 0, 0),   // Right
-    new THREE.Vector3(-1.56, 0, 0),  // Left
-    new THREE.Vector3(0, 1.56, 0),   // Top
-    new THREE.Vector3(0, -1.56, 0)   // Bottom
+    new THREE.Vector3(0, 0, 1.50),   // Front
+    new THREE.Vector3(0, 0, -1.50),  // Back
+    new THREE.Vector3(1.50, 0, 0),   // Right
+    new THREE.Vector3(-1.50, 0, 0),  // Left
+    new THREE.Vector3(0, 1.50, 0),   // Top
+    new THREE.Vector3(0, -1.50, 0)   // Bottom
 ];
 
 const dots = [];
@@ -92,7 +92,7 @@ function showPopup(faceIndex) {
 
     switch(faceIndex) {
         case 0:
-            title = 'Project 1: Environment Design';
+            title = 'Data Imaginaries: Collaboration with ACMI';
             description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
             break;
         case 1:
@@ -100,15 +100,15 @@ function showPopup(faceIndex) {
             description = 'This is a detailed description of the character modeling process for Project 2, including design decisions, sculpting techniques, and texturing.';
             break;
         case 2:
-            title = 'Project 3: VFX Simulation';
+            title = 'Blender Animation';
             description = 'This is a detailed description of the visual effects simulation work in Project 3. It focuses on particle simulations, fire, and smoke effects.';
             break;
         case 3:
-            title = 'Project 4: Animation Rigging';
+            title = 'World Building and Environments';
             description = 'This is a detailed description of the animation rigging process for Project 4, highlighting the joint structures, constraints, and IK setup.';
             break;
         case 4:
-            title = 'Project 5: Game Asset Creation';
+            title = '3D Modelling in Maya';
             description = 'This is a detailed description of the game asset creation workflow in Project 5. It covers the modeling, UV unwrapping, and texture painting steps.';
             break;
         case 5:
@@ -222,3 +222,53 @@ window.addEventListener('click', function(event) {
         popup.style.display = 'none';
     }
 });
+
+// Existing mouse functions remain unchanged...
+
+// Touch event functions
+
+function onTouchStart(event) {
+    if (event.touches.length === 1) {  // Only consider single-touch interactions
+        isDragging = true;
+        previousMousePosition = {
+            x: event.touches[0].clientX, 
+            y: event.touches[0].clientY
+        };
+    }
+    event.preventDefault();  // Prevent the browser from interpreting the touch as a scroll or pinch
+}
+
+function onTouchMove(event) {
+    if (isDragging && event.touches.length === 1) {
+        const deltaMove = {
+            x: event.touches[0].clientX - previousMousePosition.x,
+            y: event.touches[0].clientY - previousMousePosition.y
+        };
+
+        // Apply rotation based on touch movement
+        momentum.x += deltaMove.x * 0.0005;  // Sensitivity can be adjusted
+        momentum.y += deltaMove.y * 0.0005; 
+
+        previousMousePosition = {
+            x: event.touches[0].clientX, 
+            y: event.touches[0].clientY
+        };
+    }
+    event.preventDefault();  // Prevent the default touch behavior (e.g., scrolling)
+}
+
+function onTouchEnd(event) {
+    isDragging = false;
+    event.preventDefault();  // Prevent default behaviors
+}
+
+// Add touch event listeners to capture touch interactions
+window.addEventListener('touchstart', onTouchStart, false);
+window.addEventListener('touchmove', onTouchMove, false);
+window.addEventListener('touchend', onTouchEnd, false);
+
+// Existing mouse event listeners
+window.addEventListener('mousemove', onMouseMove, false);
+window.addEventListener('mousedown', onMouseDown, false);
+window.addEventListener('mouseup', onMouseUp, false);
+window.addEventListener('mousemove', onMouseDrag, false);
