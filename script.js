@@ -245,8 +245,8 @@ function onTouchMove(event) {
         };
 
         // Apply rotation based on touch movement
-        momentum.x += deltaMove.x * 0.0005;  // Sensitivity can be adjusted
-        momentum.y += deltaMove.y * 0.0005; 
+        momentum.x += deltaMove.x * 0.0008;  // Sensitivity can be adjusted
+        momentum.y += deltaMove.y * 0.0008; 
 
         previousMousePosition = {
             x: event.touches[0].clientX, 
@@ -290,8 +290,17 @@ function closePopups() {
 // Hamburger menu toggle for touch
 function toggleMenuTouch(event) {
     const menu = document.getElementById('dropdownMenu');
-    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    event.preventDefault();
+    // Ensure the menu exists before attempting to toggle
+    if (menu) {
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+    event.preventDefault(); // Prevent default behavior
+}
+
+// Add touch event listeners for tap interactions
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+if (hamburgerMenu) {
+    hamburgerMenu.addEventListener('touchend', toggleMenuTouch, false);
 }
 
 // Add touch event listeners for tap interactions
@@ -308,3 +317,4 @@ window.addEventListener('touchend', function(event) {
         }
     });
 }, false);
+
