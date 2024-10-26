@@ -23,7 +23,7 @@ const die = new THREE.Mesh(geometry, materials);
 scene.add(die);
 
 // Create dots for each face
-const dotGeometry = new THREE.SphereGeometry(0.055, 16, 16); // Small spheres
+const dotGeometry = new THREE.SphereGeometry(0.075, 16, 16); // Small spheres
 const dotMaterial = new THREE.MeshBasicMaterial({
     color: 0xbfbfbf // Flat grey color
 });
@@ -189,7 +189,7 @@ window.addEventListener('mousemove', onMouseDrag, false);
 // Initially hide the dropdown menu on startup
 document.getElementById('dropdownMenu').style.display = 'none';
 // Hamburger menu toggle functions
-function toggleMenu() {
+function toggleMenu() { 
     const menu = document.getElementById('dropdownMenu');
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
@@ -224,8 +224,6 @@ window.addEventListener('click', function(event) {
 });
 
 // Existing mouse functions remain unchanged...
-// Existing mouse functions remain unchanged...
-
 // Touch event functions for dragging and tap detection
 
 function onTouchStart(event) {
@@ -275,8 +273,18 @@ function handleTouchTap(event) {
         if (intersects.length > 0) {
             const dotIndex = dots.indexOf(intersects[0].object);
             showPopup(dotIndex);  // Show the popup based on tapped dot
+        } else {
+            closePopups(); // Close any open popups if tapping outside of dots
         }
     }
+}
+
+// Close all popups function
+function closePopups() {
+    const popups = document.querySelectorAll('.popup'); // Ensure you have a class for popups
+    popups.forEach(popup => {
+        popup.style.display = 'none';
+    });
 }
 
 // Hamburger menu toggle for touch
@@ -291,39 +299,12 @@ window.addEventListener('touchstart', onTouchStart, false);
 window.addEventListener('touchmove', onTouchMove, false);
 window.addEventListener('touchend', onTouchEnd, false);
 
-// Add touch events for other UI elements like the hamburger menu
-const hamburgerMenu = document.getElementById('hamburgerMenu');
-hamburgerMenu.addEventListener('touchend', toggleMenuTouch, false);
-
-// Toggle About section on touch
-function toggleAboutTouch(event) {
-    const aboutContent = document.getElementById('about');
-    aboutContent.style.display = aboutContent.style.display === 'block' ? 'none' : 'block';
-    const contactContent = document.getElementById('contact');
-    contactContent.style.display = 'none'; // Hide contact content when opening about
-    event.preventDefault();
-}
-
-// Toggle Contact section on touch
-function toggleContactTouch(event) {
-    const contactContent = document.getElementById('contact');
-    contactContent.style.display = contactContent.style.display === 'block' ? 'none' : 'block';
-    const aboutContent = document.getElementById('about');
-    aboutContent.style.display = 'none'; // Hide about content when opening contact
-    event.preventDefault();
-}
-
-// Add touch events for About and Contact sections
-const aboutButton = document.getElementById('aboutButton');
-aboutButton.addEventListener('touchend', toggleAboutTouch, false);
-
-const contactButton = document.getElementById('contactButton');
-contactButton.addEventListener('touchend', toggleContactTouch, false);
-
 // Close popup on touch outside
 window.addEventListener('touchend', function(event) {
-    const popup = document.getElementById('popup');
-    if (event.target === popup) {
-        popup.style.display = 'none';
-    }
+    const popups = document.querySelectorAll('.popup'); // Select all popups
+    popups.forEach(popup => {
+        if (popup.style.display === 'block' && event.target !== popup) {
+            closePopups(); // Close if the touch is outside of any open popup
+        }
+    });
 }, false);
