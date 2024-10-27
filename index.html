@@ -6,6 +6,7 @@
     <title>Justin Myat - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/Cube.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
 </head>
 
 <body>
@@ -39,10 +40,13 @@
 
     <div id="canvas-container"></div>
 
+    
+
     <div id="popup" class="popup">
         <div class="popup-content">
             <span id="closePopup" class="close-button">X</span>
             <h2 id="popupTitle"></h2>
+            <img id="popupImage" style="display:none;" alt="Project Image" />
             <p id="popupDescription"></p>
         </div>
     </div>
