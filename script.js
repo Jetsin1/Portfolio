@@ -23,7 +23,7 @@ const die = new THREE.Mesh(geometry, materials);
 scene.add(die);
 
 // Create dots for each face
-const dotGeometry = new THREE.SphereGeometry(0.075, 16, 16); // Small spheres
+const dotGeometry = new THREE.SphereGeometry(0.125, 16, 16); // Small spheres
 const dotMaterial = new THREE.MeshBasicMaterial({
     color: 0xbfbfbf // Flat grey color
 });
@@ -96,13 +96,11 @@ function showPopup(faceIndex) {
             description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
             imageSrc = 'images/Show/ACMI.png'; // Replace with your image path
             break;
-            case 1:
-                // Set the title and description for Substance 3D Painter
-                title = 'Substance 3D Painter';
-                description = `I’m skilled in using Substance Painter, which I view as a valuable asset in my 3D modeling and VFX toolkit. I create highly detailed and realistic textures by leveraging features like texture painting, material layering, and smart materials. My proficiency allows me to paint directly onto 3D models, facilitating easier visualization and adjustments. I excel at crafting complex materials through layering and procedural effects, while also ensuring my assets are export-ready for game engines or rendering software. With a solid understanding of UV mapping, I achieve precise texture placement and high-quality results, making me a competitive candidate for roles in texturing and material creation.
-                `;
-                imageSrc = 'images/Show/Substance.png'; // Replace with your image path
-                break;
+        case 1:
+            title = 'Substance 3D Painter';
+            description = `I’m skilled in using Substance Painter, which I view as a valuable asset in my 3D modeling and VFX toolkit. I create highly detailed and realistic textures by leveraging features like texture painting, material layering, and smart materials. My proficiency allows me to paint directly onto 3D models, facilitating easier visualization and adjustments. I excel at crafting complex materials through layering and procedural effects, while also ensuring my assets are export-ready for game engines or rendering software. With a solid understanding of UV mapping, I achieve precise texture placement and high-quality results, making me a competitive candidate for roles in texturing and material creation.`;
+            imageSrc = 'images/Show/Substance.png'; // Replace with your image path
+            break;
         case 2:
             title = 'Blender Animation';
             description = 'This is a detailed description of the visual effects simulation work in Project 3. It focuses on particle simulations, fire, and smoke effects.';
@@ -116,7 +114,7 @@ function showPopup(faceIndex) {
         case 4:
             title = '3D Modelling in Maya';
             description = 'This is a detailed description of the game asset creation workflow in Project 5. It covers the modeling, UV unwrapping, and texture painting steps.';
-            imageSrc = 'images/Show/World Building.png'; // Replace with your image path
+            imageSrc = 'images/Show/3D modelling.png'; // Replace with your image path
             break;
         case 5:
             title = 'Lego Animation';
