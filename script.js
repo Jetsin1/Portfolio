@@ -93,38 +93,40 @@ function showPopup(faceIndex) {
     switch(faceIndex) {
         case 0:
             title = 'Data Imaginaries: Collaboration with ACMI';
-            description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
-            imageSrc = 'images/image 1.png'; // Replace with your image path
+            description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
+            imageSrc = 'images/Show/ACMI.png'; // Replace with your image path
             break;
-        case 1:
-            title = '3D Environment';
-            description = 'This is a detailed description of the character modeling process for Project 2, including design decisions, sculpting techniques, and texturing.';
-            imageSrc = 'path/to/image2.jpg'; // Replace with your image path
-            break;
+            case 1:
+                // Set the title and description for Substance 3D Painter
+                title = 'Substance 3D Painter';
+                description = `I’m skilled in using Substance Painter, which I view as a valuable asset in my 3D modeling and VFX toolkit. I create highly detailed and realistic textures by leveraging features like texture painting, material layering, and smart materials. My proficiency allows me to paint directly onto 3D models, facilitating easier visualization and adjustments. I excel at crafting complex materials through layering and procedural effects, while also ensuring my assets are export-ready for game engines or rendering software. With a solid understanding of UV mapping, I achieve precise texture placement and high-quality results, making me a competitive candidate for roles in texturing and material creation.
+                `;
+                imageSrc = 'images/Show/Substance.png'; // Replace with your image path
+                break;
         case 2:
             title = 'Blender Animation';
             description = 'This is a detailed description of the visual effects simulation work in Project 3. It focuses on particle simulations, fire, and smoke effects.';
-            imageSrc = 'path/to/image3.jpg'; // Replace with your image path
+            imageSrc = 'images/Show/Hospital.png'; // Replace with your image path
             break;
         case 3:
             title = 'World Building and Environments';
-            description = 'This is a detailed description of the animation rigging process for Project 4, highlighting the joint structures, constraints, and IK setup.';
-            imageSrc = 'path/to/image4.jpg'; // Replace with your image path
+            description = 'This was a world building and environment project created within Unity. The purpose of this project was to create a world that';
+            imageSrc = 'images/Show/World Building.png'; // Replace with your image path
             break;
         case 4:
             title = '3D Modelling in Maya';
             description = 'This is a detailed description of the game asset creation workflow in Project 5. It covers the modeling, UV unwrapping, and texture painting steps.';
-            imageSrc = 'path/to/image5.jpg'; // Replace with your image path
+            imageSrc = 'images/Show/World Building.png'; // Replace with your image path
             break;
         case 5:
-            title = 'Project 6: Architectural Visualization';
+            title = 'Lego Animation';
             description = 'This is a detailed description of the architectural visualization work in Project 6. It includes rendering techniques, camera settings, and material creation.';
-            imageSrc = 'path/to/image6.jpg'; // Replace with your image path
+            imageSrc = 'images/Show/Lego.png'; // Replace with your image path
             break;
         default:
-            title = 'Project Details';
+            title = 'ERRORRRRR';
             description = 'This face does not have a specific project associated with it yet.';
-            imageSrc = 'path/to/default.jpg'; // Replace with your image path
+            imageSrc = 'images/ACMI.png'; // Replace with your image path
             break;
     }
 
