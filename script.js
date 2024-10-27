@@ -88,44 +88,58 @@ animate();
 
 // Callback function for showing popups
 function showPopup(faceIndex) {
-    let title, description;
+    let title, description, imageSrc;
 
     switch(faceIndex) {
         case 0:
             title = 'Data Imaginaries: Collaboration with ACMI';
             description = 'This is a detailed description of the environment design for Project 1. It includes various elements such as lighting, textures, and terrain development.';
+            imageSrc = 'images/image 1.png'; // Replace with your image path
             break;
         case 1:
             title = '3D Environment';
             description = 'This is a detailed description of the character modeling process for Project 2, including design decisions, sculpting techniques, and texturing.';
+            imageSrc = 'path/to/image2.jpg'; // Replace with your image path
             break;
         case 2:
             title = 'Blender Animation';
             description = 'This is a detailed description of the visual effects simulation work in Project 3. It focuses on particle simulations, fire, and smoke effects.';
+            imageSrc = 'path/to/image3.jpg'; // Replace with your image path
             break;
         case 3:
             title = 'World Building and Environments';
             description = 'This is a detailed description of the animation rigging process for Project 4, highlighting the joint structures, constraints, and IK setup.';
+            imageSrc = 'path/to/image4.jpg'; // Replace with your image path
             break;
         case 4:
             title = '3D Modelling in Maya';
             description = 'This is a detailed description of the game asset creation workflow in Project 5. It covers the modeling, UV unwrapping, and texture painting steps.';
+            imageSrc = 'path/to/image5.jpg'; // Replace with your image path
             break;
         case 5:
             title = 'Project 6: Architectural Visualization';
             description = 'This is a detailed description of the architectural visualization work in Project 6. It includes rendering techniques, camera settings, and material creation.';
+            imageSrc = 'path/to/image6.jpg'; // Replace with your image path
             break;
         default:
             title = 'Project Details';
             description = 'This face does not have a specific project associated with it yet.';
+            imageSrc = 'path/to/default.jpg'; // Replace with your image path
             break;
     }
+
+
 
     // Display the popup with the individualized title and description
     const popup = document.getElementById('popup');
     popup.style.display = 'flex';
     document.getElementById('popupTitle').innerText = title;
     document.getElementById('popupDescription').innerText = description;
+
+        // Handle the image display
+        const popupImage = document.getElementById('popupImage'); // Ensure you have an <img> element with this ID in your HTML
+        popupImage.src = imageSrc; // Set the image source
+        popupImage.style.display = 'block'; // Show the image
 }
 
 // Add raycasting for mouse interaction
@@ -212,19 +226,37 @@ function toggleContact() {
 
 // Popup close function
 document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('popup').style.display = 'none'; // Hide popup on close
+    const popup = document.getElementById('popup');
+    popup.classList.add('popup-closing'); // Add closing class for animation
+
+    // Wait for the animation to complete before hiding the popup
+    setTimeout(function() {
+        popup.style.display = 'none'; // Hide popup after animation
+        popup.classList.remove('popup-closing'); // Remove closing class for future openings
+    }, 500); // Match this duration to the CSS transition duration
 });
 
 // Close popup when clicking outside of it
 window.addEventListener('click', function(event) {
     const popup = document.getElementById('popup');
     if (event.target === popup) {
-        popup.style.display = 'none';
+        popup.classList.add('popup-closing'); // Add closing class for animation
+
+        // Wait for the animation to complete before hiding the popup
+        setTimeout(function() {
+            popup.style.display = 'none'; // Hide popup after animation
+            popup.classList.remove('popup-closing'); // Remove closing class for future openings
+        }, 500); // Match this duration to the CSS transition duration
     }
 });
 
 // Existing mouse functions remain unchanged...
 // Touch event functions for dragging and tap detection
+
+window.addEventListener('touchstart', onTouchStart, false);
+window.addEventListener('touchmove', onTouchMove, false);
+window.addEventListener('touchend', onTouchEnd, false);
+
 
 function onTouchStart(event) {
     if (event.touches.length === 1) {  // Only consider single-touch interactions
@@ -262,22 +294,24 @@ function onTouchEnd(event) {
     event.preventDefault();
 }
 
-// Handle tap for opening popups (simulates clicking on dots)
 function handleTouchTap(event) {
-    if (!isDragging) {
+    if (!isDragging) {  // Ensure this is a tap, not a drag
         const touch = event.changedTouches[0];
         mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+        
+        // Set up raycasting to detect intersections with dots
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(dots);
+
         if (intersects.length > 0) {
+            // Get the dot index to determine which face was tapped
             const dotIndex = dots.indexOf(intersects[0].object);
-            showPopup(dotIndex);  // Show the popup based on tapped dot
-        } else {
-            closePopups(); // Close any open popups if tapping outside of dots
+            showPopup(dotIndex); // Show popup with the corresponding face index
         }
     }
 }
+
 
 // Close all popups function
 function closePopups() {
@@ -303,11 +337,6 @@ if (hamburgerMenu) {
     hamburgerMenu.addEventListener('touchend', toggleMenuTouch, false);
 }
 
-// Add touch event listeners for tap interactions
-window.addEventListener('touchstart', onTouchStart, false);
-window.addEventListener('touchmove', onTouchMove, false);
-window.addEventListener('touchend', onTouchEnd, false);
-
 // Close popup on touch outside
 window.addEventListener('touchend', function(event) {
     const popups = document.querySelectorAll('.popup'); // Select all popups
@@ -318,3 +347,8 @@ window.addEventListener('touchend', function(event) {
     });
 }, false);
 
+window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
